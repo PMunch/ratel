@@ -23,11 +23,11 @@ proc send*(_: static[I2c], data: uint8) =
   twcr.set twen, twint
   while not twcr.check twint: discard
 
-proc recv*(_: static[I2c], ack: static[bool]): uint8 =
-  when ack:
-    twcr.set twen, twint, twea
-  else:
+proc recv*(_: static[I2c], last: static[bool]): uint8 =
+  when last:
     twcr.set twen, twint
+  else:
+    twcr.set twen, twint, twea
   while not twcr.check twint: discard
   return twdr
 
@@ -46,5 +46,5 @@ proc readRegister*(bus: static[I2c], address, register: uint8): uint8 =
 
   bus.start()
   bus.send(address or 0x01)
-  result = bus.recv(false)
+  result = bus.recv(true)
   bus.stop()

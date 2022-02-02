@@ -69,9 +69,9 @@ let
 {.pop.}
 
 type
-  Teensy* = object
+  Board* = object
   Port* = object
-    device*: Teensy
+    device*: Board
     portChar*: char
   Pin* = object
     port*: Port

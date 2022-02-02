@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ratel - next generation embedded programming</title>
+    <!--<meta name="description" content="A classic company or blog layout with a sidebar. Built with Pico CSS.">-->
+    <link rel="shortcut icon" href="https://picocss.com/favicon.ico">
+    <link rel="canonical" href="https://picocss.com/examples/company/">
+
+    <!-- Pico.css -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+
+    <!-- Custom styles for this example -->
+    <link rel="stylesheet" href="custom.css">
+  </head>
+
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <img src="assets/logo-header-small.png" alt="Ratel Logo"/>
+        <li><a href="index.html" class="contrast"><strong>Ratel</strong></a></li>
+      </ul>
+      <ul>
+        <li><a href="gettingstarted.html" class="contrast">Getting started</a></li>
+        <li><a href="documentation/board/board.html" class="contrast">Documentation</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <main class="container">
+      <div class="grid">
+
+        <section>
+          <h3>Getting started</h3>
+          <p>Getting started with Ratel is fairly simply. First you need to have <a href="https://nim-lang.org/">Nim</a> installed, then you need to install
+          Ratel itself:</p>
+          <figure>
+            <code>
+              nimble install ratel
+            </code>
+          </figure>
+          <p>If your board is not included in the official distribution you need to grab support for that as well. You should be able to search for all Ratel
+          based packages in the <a href="https://nimble.directory/search?query=ratel">package directory</a>. In order to compile and build for your board you
+          will also need the toolchain to compile C code and upload that to your board as well. The details of this should be found with the board support
+          library.</p>
+
+          <p>Once you have Ratel and your board support installed you need to set up your project. It's a little bit of manual work for the time being, but
+          this should improve in the future. First you need a configuration file to let Nim know that we're building for a microcontroller. In this tutorial
+          we'll be building for an Arduino Uno, but these steps should be mostly the same no matter the board.</p>
+
+          <figure>
+            <code>
+              cpu = "avr"
+              os = "any"
+              gc = "arc"
+              define = "useMalloc"
+              opt = "size"
+              deadCodeElim = "on"
+              exceptions = "goto"
+              define = "noSignalHandler"
+              noMain
+              define = "board:teensy"
+
+              avr.standalone.gcc.path = "/usr/bin"
+              avr.standalone.gcc.exe = "avr-gcc"
+              avr.standalone.gcc.linkerexe = "avr-gcc"
+              avr.any.gcc.path = "/usr/bin"
+              avr.any.gcc.exe = "avr-gcc"
+              avr.any.gcc.linkerexe = "avr-gcc"
+              avr.any.gcc.cpp.path = "/usr/bin"
+              avr.any.gcc.cpp.exe = "avr-gcc"
+              avr.any.gcc.cpp.linkerexe = "avr-gcc"
+            </code>
+          </figure>
+
+          <p>This does a couple of things, <code>cpu = "avr"</code> tells the compiler about our architecture, such as the size of a pointer.
+          <code>os = "any"</code> makes sure that the compiler <code>gc = "arc"</code> turns on the new automatic reference counting algorithm for the garbage collector. If you
+          don't use any garbage collected memory this won't generate any code, and even if you do it's nice and efficient.  <code></code></p>
+
+
+          <p>The above code probably looks familiar if you've ever written code in Arduino. What won't be familiar is the size of the program that is uploaded to your microcontroller. A similar program implemented across many popular frameworks - all compiled to be size-efficient - shows us that while all the code looks fairly similar the frameworks have quite different costs of abstraction. The following graph shows the total program and data memory of the above program (and similar implementations in other languages) compiled for the Arduino Uno. Keep in mind that the program memory for the microcontroller on this board is 32Kb and the data memory is a mere 2Kb.</p>
+
+          <figure>
+            <img src="graph.svg" alt="Comparisson">
+            <figcaption>Comparison of test program across various frameworks</figcaption>
+          </figure>
+          <h3>How does Ratel achieve this?</h3>
+          <p>The secret to generate such tiny code is simple, let the computer compiling do the work. Ratel leverages the Nim programming language and its powerful meta-programming and compile-time execution powers. This also means that not only does it generate tiny programs, but it also stays at a high level of abstraction. By using compile-time objects and distinct types we have a much stricter type system than just writing pure C code. An example of this is how program memory is handled, you might have missed it but in the above example the strings are put in program memory and selecting the correct serial send procedure is done by an override. This gives Ratel a lot of flexibility while still staying much safer than code which would hand pointers to data around.</p>
+        </section>
+
+        <aside>
+          <a href="documentation/board/board.html"><img src="assets/open-book.png" alt="Open boox"></a>
+          <p>
+            <a href="documentation/board/board.html">Documentation</a><br>
+            <small>Read the documentation for the various modules Ratel offers.</small>
+          </p>
+          <a href="gettingstarted.html"><img src="assets/rocket.png" alt="Rocket"></a>
+          <p>
+            <a href="gettingstarted.html">Getting started</a><br>
+            <small>This page takes you through getting started programming your microcontroller in Ratel.</small>
+          </p>
+          <a href="implementboard.html"><img src="assets/microcontroller.png" alt="Microcontroller"></a>
+          <p>
+            <a href="implementboard.html">Implement a board</a><br>
+            <small>Didn't find the board you needed in the list? Integrating it yourself is quite simple.</small>
+          </p>
+          <!--<a href="#" aria-label="Example" onclick="event.preventDefault()"><img src="https://source.unsplash.com/Ru3Ap8TNcsk/1500x750" alt="Architecture"></a>
+          <p>
+            <a href="#" onclick="event.preventDefault()">Read some documentation</a><br>
+            <small>Maecenas vitae nibh blandit dolor commodo egestas vel eget neque. Praesent semper justo orci, vel imperdiet mi auctor in.</small>
+          </p>-->
+        </aside>
+
+      </div>
+    </main><!-- ./ Main -->
+
+    <!-- Footer -->
+    <footer class="container">
+      <small>Built with <a href="https://picocss.com">Pico</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/study" title="study icons">Study icons created by Freepik - Flaticon</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/deploy" title="deploy icons">Deploy icons created by Freepik - Flaticon</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/microcontroller" title="microcontroller icons">Microcontroller icons created by Eucalyp - Flaticon</a></small>
+    </footer><!-- ./ Footer -->
+  </body>
+
+</html>

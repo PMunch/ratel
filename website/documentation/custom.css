@@ -1,0 +1,159 @@
+/* Yellow Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --primary: #ffe953;
+  --primary-hover: #fbc02d;
+  --primary-focus: rgba(253, 216, 53, 0.125);
+  --primary-inverse: rgba(0, 0, 0, 0.75);
+}
+
+/* Yellow Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #ffe953;
+    --primary-hover: #ffeb3b;
+    --primary-focus: rgba(253, 216, 53, 0.25);
+    --primary-inverse: rgba(0, 0, 0, 0.75);
+    --background-color: #1e202a;
+    --code-background-color: #2b2e3b;
+  }
+}
+
+/* Yellow Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --primary: #ffe953;
+  --primary-hover: #ffeb3b;
+  --primary-focus: rgba(253, 216, 53, 0.25);
+  --primary-inverse: rgba(0, 0, 0, 0.75);
+  --background-color: #1e202a;
+  --code-background-color: #2b2e3b;
+}
+
+/* Yellow (Common styles) */
+:root {
+  --form-element-active-border-color: var(--primary);
+  --form-element-focus-color: var(--primary-focus);
+  --switch-color: var(--primary-inverse);
+  --switch-checked-background-color: var(--primary);
+  --spacing-company: 3rem;
+  --font-weight: 400;
+  --border-radius: 0.2rem;
+}
+span.Keyword {
+  font-weight: bold;
+  color: #ff79c6 }
+span.Punctuation {
+  font-weight: bold; }
+span.Identifier {
+  color: #fff; }
+span.Identifier > a, li > a {
+  color: #8be9fd; }
+span.DecNumber, span.BinNumber, span.HexNumber, span.OctNumber, span.FloatNumber {
+  color: #bd93f9; }
+span.StringLit, span.LongStringLit, span.CharLit {
+  color: #f1fa8c; }
+span.EscapeSequence {
+  color: #bd93f9; }
+span.Operator {
+  color: #ff79c6; }
+span.Comment, span.LongComment {
+  font-style: italic;
+  font-weight: 400;
+  color: #6272a4; }
+span.RegularExpression {
+  color: darkviolet; }
+span.TagStart {
+  color: darkviolet; }
+span.TagEnd {
+  color: darkviolet; }
+span.Key {
+  color: #252dbe; }
+span.Value {
+  color: #252dbe; }
+span.RawData {
+  color: #8be9fd; }
+span.Assembler {
+  color: #252dbe; }
+span.Preprocessor {
+  color: #252dbe; }
+span.Directive {
+  color: #252dbe; }
+span.Prompt {
+  font-weight: bold;
+  color: red; }
+span.ProgramOutput {
+  font-weight: bold;
+  color: #808080; }
+span.Command, span.Rule, span.Hyperlink, span.Label, span.Reference,
+span.Other {
+  color: #f8f8f2; }
+dt > code {
+  width: 100%;
+}
+dd {
+  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+.muted, .muted > a {
+  color: rgb(128, 131, 139);
+}
+body {
+  display: grid;
+  grid-template-areas:
+    'nav nav'
+    'aside main';
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 0px;
+}
+body > nav {
+  grid-area: nav;
+}
+body > main {
+  grid-area: main;
+}
+body > header {
+  grid-area: header;
+}
+body > footer {
+  grid-area: footer;
+}
+body > aside {
+  grid-area: aside;
+}
+body > aside {
+  padding: calc(var(--spacing) * 4) var(--spacing);
+}
+body > nav {
+  position: sticky;
+  top: 0;
+  background-color: #2b2e3b;
+}
+:target {
+  background-color: #373526;
+}
+pre.listing {
+  padding: .375rem .5rem;
+}
+.group, .ident {
+  border: 5px solid #0000;
+  border-radius: var(--border-radius);
+}
+.ident {
+  margin: 5px -5px;
+}
+li > span {
+  float: right;
+}
+aside > a {
+  display: block;
+  margin-bottom: var(--spacing);
+  padding-bottom: calc(var(--spacing) * 0.5);
+  border-bottom: var(--border-width) solid var(--accordion-border-color);
+}
+.contrast {
+  color: var(--color);
+}

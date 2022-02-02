@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.7.45">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="../custom.css">
+  <title></title>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><strong>Ratel</strong></li>
+    </ul>
+    <ul>
+      <li>i2c</li>
+      <li>progmem</li>
+    </ul>
+  </nav>
+  <aside>
+      <h3>Navigation</h3>
+      <details open>
+        <summary>I2C</summary>
+        <ul>
+          <li><a href="#i2c">I2c</a></li>
+          <li><a href="#init">init()</a></li>
+          <li>start()</li>
+          <li>stop()</li>
+          <li>send()</li>
+          <li>recv()</li>
+          <li>writeRegister()</li>
+          <li>readRegister()</li>
+        </ul>
+      </details>
+        <details>
+          <summary><a href="https://google.com">PROGMEM</a></summary>
+        </details>
+  </aside>
+  <main class="container">
+    <h2><span class="muted">board/</span>i2c</h2>
+    <p>This is documentation for the i2c integration. Please note that this is just documentation for the interface, different boards might have different
+    caveats for the various procedures.</p>
+    <dl>
+      <dt><code id="i2c"><span class="Keyword">type</span> <span class="Identifier">I2c</span> <span class="Operator">=</span> <span class=
+      "Keyword">object</span></code></dt>
+      <dd>This is the type of an I2c bus, the object should be passed to all i2c procedures. If your board requires runtime information to manage the i2c bus
+      this will be kept in this object, and the below procedures won't be defined to use a <tt class="docutils literal"><span class="pre"><span class=
+      "Keyword">static</span></span></tt> object. The board should define available i2c buses.</dd>
+      <dt><code id="init"><span class="Keyword">proc</span> <span class="Identifier">init</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">)</span></code></dt>
+      <dd>Initialises the I2C bus</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">start</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">)</span></code></dt>
+      <dd>Starts an I2C data transfer</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">stop</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">)</span></code></dt>
+      <dd>Stops an I2C data transfer</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">send</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">data</span><span class=
+      "Punctuation">:</span> <span class="Identifier"><a href="https://nim-lang.org/docs/system.html#uint8">uint8</a></span><span class=
+      "Punctuation">)</span></code></dt>
+      <dd>Sends one raw byte of data</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">recv</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">last</span><span class=
+      "Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class="Identifier"><a href=
+      "https://nim-lang.org/docs/system.html#bool">bool</a></span><span class="Punctuation">]</span><span class="Punctuation">)</span><span class=
+      "Punctuation">:</span> <span class="Identifier"><a href="https://nim-lang.org/docs/system.html#uint8">uint8</a></span></code></dt>
+      <dd>Receives one raw byte of data, the last argument determines if this is the last byte to read or not.</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">writeRegister</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">address</span><span class=
+      "Punctuation">,</span> <span class="Identifier">register</span><span class="Punctuation">,</span> <span class="Identifier">data</span><span class=
+      "Punctuation">:</span> <span class="Identifier"><a href="https://nim-lang.org/docs/system.html#uint8">uint8</a></span><span class=
+      "Punctuation">)</span></code></dt>
+      <dd>Writes a byte of data to the device with the given address, into the register.</dd>
+      <dt><code><span class="Keyword">proc</span> <span class="Identifier">readRegister</span><span class="Punctuation">(</span><span class=
+      "Identifier">bus</span><span class="Punctuation">:</span> <span class="Keyword">static</span><span class="Punctuation">[</span><span class=
+      "Identifier">I2c</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">address</span><span class=
+      "Punctuation">,</span> <span class="Identifier">register</span><span class="Punctuation">:</span> <span class="Identifier"><a href=
+      "https://nim-lang.org/docs/system.html#uint8">uint8</a></span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class=
+      "Identifier"><a href="https://nim-lang.org/docs/system.html#uint8">uint8</a></span></code></dt>
+      <dd>Reads a byte from the device with the given address at the given register.</dd>
+    </dl>
+  </main>
+</body>
+</html>

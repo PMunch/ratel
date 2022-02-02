@@ -64,9 +64,9 @@ let
 {.pop.}
 
 type
-  UnoR3* = object
+  Board* = object
   Port* = object
-    device*: UnoR3
+    device*: Board
     portChar*: char
   Pin* = object
     port*: Port

@@ -70,7 +70,7 @@ macro high*(pin: static[Pin]): untyped =
 macro low*(port: static[Port], mask = 0xff'u8): untyped =
   expandPort("port")
   quote do:
-    `portReg` = `mask`
+    `portReg` = not `mask`
 
 macro low*(pin: static[Pin]): untyped =
   let

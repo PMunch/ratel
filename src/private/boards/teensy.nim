@@ -7,7 +7,7 @@ proc pin(port: char, num: int): Pin {.compileTime.} =
   Pin(port: Port(portChar: port), num: num)
 
 const
-  this = Teensy()
+  this = Board()
   I2cBus* = I2c()
   Serial* = SerialPort(port: 1)
   D* = Port(portChar: 'D')

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ratel - next generation embedded programming</title>
+    <!--<meta name="description" content="A classic company or blog layout with a sidebar. Built with Pico CSS.">-->
+    <link rel="shortcut icon" href="https://picocss.com/favicon.ico">
+    <link rel="canonical" href="https://picocss.com/examples/company/">
+
+    <!-- Pico.css -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+
+    <!-- Custom styles for this example -->
+    <link rel="stylesheet" href="custom.css">
+  </head>
+
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <img src="assets/logo-header-small.png"/>
+        <li><a href="./" class="contrast" onclick="event.preventDefault()"><strong>Ratel</strong></a></li>
+      </ul>
+      <ul>
+        <li><a href="gettingstarted.html" class="contrast">Getting started</a></li>
+        <li><a href="documentation/board/board.html" class="contrast">Documentation</a></li>
+      </ul>
+    </nav>
+    <!-- Hero -->
+    <div class="hero" data-theme="dark">
+      <header class="container">
+        <div class="grid">
+          <div>
+            <hgroup>
+              <h1>Ratel</h1>
+              <h2>Zero-cost abstractions for better next generation embedded programming</h2>
+            </hgroup>
+            <p><a href="gettingstarted.html" role="button">Get started!</a></p>
+          </div>
+          <div>
+            <img class="heroimg" src="assets/nim-mascot-head.png"/>
+          </div>
+      </header>
+    </div><!-- ./ Hero -->
+
+    <!-- Main -->
+    <main class="container">
+      <div class="grid">
+
+        <section>
+          <h3>What is Ratel?</h3>
+          <p>Abstraction is the goal of any programming language or library. Take something complex, and make it more accessible. Instead of hand-writing CPU instructions we use programming languages, and instead of manually performing tasks in said languages we use libraries that hides the nitty-gritty details from us. However abstractions often come at a cost, every transformation might introduce overhead, and every data structure might waste bytes of data. This might not be such a big issue on modern computers, the speed of development vs. the speed of execution is a balance that is often tipped towards development speed. But on microcontrollers these kinds of abstractions can quickly chew up a considerable amount of program size and execution speed. The goal of Ratel is to provide zero-cost abstractions which allows you to write simple code that reads easily, but which compiles down to become as small as hand-written C code.</p>
+          <figure>
+            <code>
+              <img src="assets/ratelsample.svg" alt="Sample">
+            </code>
+            <figcaption>An example of Ratel code</figcaption>
+          </figure>
+
+          <p>The above code probably looks familiar if you've ever written code in Arduino. What won't be familiar is the size of the program that is uploaded to your microcontroller. A similar program implemented across many popular frameworks - all compiled to be size-efficient - shows us that while all the code looks fairly similar the frameworks have quite different costs of abstraction. The following graph shows the total program and data memory of the above program (and similar implementations in other languages) compiled for the Arduino Uno. Keep in mind that the program memory for the microcontroller on this board is 32Kb and the data memory is a mere 2Kb.</p>
+
+          <figure>
+            <img src="assets/graph.svg" alt="Comparisson">
+            <figcaption>Comparison of test program across various frameworks</figcaption>
+          </figure>
+          <h3>How does Ratel achieve this?</h3>
+          <p>The secret to generate such tiny code is simple, let the computer compiling do the work. Ratel leverages the Nim programming language and its powerful meta-programming and compile-time execution powers. This also means that not only does it generate tiny programs, but it also stays at a high level of abstraction. By using compile-time objects and distinct types we have a much stricter type system than just writing pure C code. An example of this is how program memory is handled, you might have missed it but in the above example the strings are put in program memory and selecting the correct serial send procedure is done by an override. This gives Ratel a lot of flexibility while still staying much safer than code which would hand pointers to data around.</p>
+        </section>
+
+        <aside>
+          <a href="documentation/board/board.html"><img src="assets/open-book.png" alt="Open boox"></a>
+          <p>
+            <a href="documentation/board/board.html">Documentation</a><br>
+            <small>Read the documentation for the various modules Ratel offers.</small>
+          </p>
+          <a href="gettingstarted.html"><img src="assets/rocket.png" alt="Rocket"></a>
+          <p>
+            <a href="gettingstarted.html">Getting started</a><br>
+            <small>This page takes you through getting started programming your microcontroller in Ratel.</small>
+          </p>
+          <a href="implementboard.html"><img src="assets/microcontroller.png" alt="Microcontroller"></a>
+          <p>
+            <a href="implementboard.html">Implement a board</a><br>
+            <small>Didn't find the board you needed in the list? Integrating it yourself is quite simple.</small>
+          </p>
+          <!--<a href="#" aria-label="Example" onclick="event.preventDefault()"><img src="https://source.unsplash.com/Ru3Ap8TNcsk/1500x750" alt="Architecture"></a>
+          <p>
+            <a href="#" onclick="event.preventDefault()">Read some documentation</a><br>
+            <small>Maecenas vitae nibh blandit dolor commodo egestas vel eget neque. Praesent semper justo orci, vel imperdiet mi auctor in.</small>
+          </p>-->
+        </aside>
+
+      </div>
+    </main><!-- ./ Main -->
+
+    <!-- Footer -->
+    <footer class="container">
+      <small>Built with <a href="https://picocss.com">Pico</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/study" title="study icons">Study icons created by Freepik - Flaticon</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/deploy" title="deploy icons">Deploy icons created by Freepik - Flaticon</a></small><br/>
+      <small><a href="https://www.flaticon.com/free-icons/microcontroller" title="microcontroller icons">Microcontroller icons created by Eucalyp - Flaticon</a></small>
+    </footer><!-- ./ Footer -->
+  </body>
+
+</html>
