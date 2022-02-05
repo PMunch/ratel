@@ -77,19 +77,19 @@ macro low*(pin: static[Pin]): untyped =
     port = pin.port
     mask = newLit(1'u8 shl pin.num)
   quote do:
-    low(`port`, state(`port`) and not `mask`)
+    low(`port`, not (state(`port`) and not `mask`))
 
 macro input*(port: static[Port], mask = 0xff'u8): untyped =
   expandPort("ddr")
   quote do:
-    `portReg` = `mask`
+    `portReg` = not `mask`
 
 macro input*(pin: static[Pin]): untyped =
   let
     port = pin.port
     mask = newLit(1'u8 shl pin.num)
   quote do:
-    input(`port`, direction(`port`) and not `mask`)
+    input(`port`, not (direction(`port`) and not `mask`))
 
 template normal*(port: static[Port], mask = 0xff'u8): untyped =
   low(port, mask)

@@ -104,9 +104,9 @@ dd {
 body {
   display: grid;
   grid-template-areas:
-    'nav nav'
-    'aside main';
-  grid-template-columns: 1fr 4fr;
+    'nav nav nav nav'
+    '. aside main .';
+  grid-template-columns: 1fr 350px 1050px 1fr;
   grid-gap: 0px;
 }
 body > nav {
@@ -131,6 +131,11 @@ body > nav {
   position: sticky;
   top: 0;
   background-color: #2b2e3b;
+  z-index: 9001;
+}
+nav > nav {
+  min-width: 1400px;
+  margin: 0 auto;
 }
 :target {
   background-color: #373526;

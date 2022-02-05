@@ -52,9 +52,21 @@
           <h3>What is Ratel?</h3>
           <p>Abstraction is the goal of any programming language or library. Take something complex, and make it more accessible. Instead of hand-writing CPU instructions we use programming languages, and instead of manually performing tasks in said languages we use libraries that hides the nitty-gritty details from us. However abstractions often come at a cost, every transformation might introduce overhead, and every data structure might waste bytes of data. This might not be such a big issue on modern computers, the speed of development vs. the speed of execution is a balance that is often tipped towards development speed. But on microcontrollers these kinds of abstractions can quickly chew up a considerable amount of program size and execution speed. The goal of Ratel is to provide zero-cost abstractions which allows you to write simple code that reads easily, but which compiles down to become as small as hand-written C code.</p>
           <figure>
-            <code>
-              <img src="assets/ratelsample.svg" alt="Sample">
-            </code>
+<pre><code><span class="Keyword">import</span> <span class="Identifier">board</span>
+<span class="Keyword">import</span> <span class="Identifier">board</span> <span class="Operator">/</span> <span class="ImportPunctuation">[</span><span class="Identifier">times</span><span class="Punctuation">,</span> <span class="Identifier">serial</span><span class="Punctuation">,</span> <span class="Identifier">progmem</span><span class="ImportPunctuation">]</span>
+
+<span class="SpecialKeyword">proc</span> <span class="ProcDef">main</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">cint</span> <span class="Punctuation">{</span><span class="Operator">.</span><span class="Identifier">exportc</span><span class="Operator">.</span><span class="Punctuation">}</span> <span class="Operator">=</span>
+  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">init</span><span class="Punctuation">(</span><span class="DecNumber">9600</span><span class="Punctuation">)</span>
+  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Hello world\n&quot;</span>
+  <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">output</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+
+  <span class="SpecialKeyword">while</span> <span class="Bool">true</span><span class="Punctuation">:</span>
+    <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">high</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+    <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is on&quot;</span>
+    <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span>
+    <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">low</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+    <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is off&quot;</span>
+    <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span></code></pre>
             <figcaption>An example of Ratel code</figcaption>
           </figure>
 

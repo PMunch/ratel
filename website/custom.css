@@ -43,8 +43,61 @@
   --border-radius: 0.2rem;
 }
 
-code {
+span.Keyword {
+  color: #f92672 }
+span.Punctuation {
+  font-weight: bold; }
+span.ImportPunctuation {
+  color: #f92672 }
+span.Identifier {
+  color: #fff; }
+span.Identifier > a, span.SpecialKeyword {
+  color: #8be9fd; }
+span.DecNumber, span.BinNumber, span.HexNumber, span.OctNumber, span.FloatNumber, span.Bool {
+  color: #bd93f9; }
+span.StringLit, span.LongStringLit, span.CharLit, span.RawData {
+  color: #f1fa8c; }
+span.ProcDef {
+  color: #a0da2e; }
+span.EscapeSequence {
+  color: #bd93f9; }
+span.Operator {
+  color: #f92672 }
+span.Comment, span.LongComment {
+  font-style: italic;
+  font-weight: 400;
+  color: #6272a4; }
+span.RegularExpression {
+  color: darkviolet; }
+span.TagStart {
+  color: darkviolet; }
+span.TagEnd {
+  color: darkviolet; }
+span.Key {
+  color: #252dbe; }
+span.Value {
+  color: #252dbe; }
+span.Assembler {
+  color: #252dbe; }
+span.Preprocessor {
+  color: #252dbe; }
+span.Directive {
+  color: #252dbe; }
+span.Prompt {
+  font-weight: bold;
+  color: red; }
+span.ProgramOutput {
+  font-weight: bold;
+  color: #808080; }
+span.Command, span.Rule, span.Hyperlink, span.Label, span.Reference,
+span.Other {
+  color: #f8f8f2; }
+
+figure > code {
   width: 100%;
+}
+code {
+  padding: 0.18rem .25rem
 }
 figcaption {
   font-size: 85%;

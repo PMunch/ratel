@@ -72,7 +72,7 @@ for module, content in modules:
   let output = open("documentation/board/" & module & ".html", fmWrite)
   output.write("<!DOCTYPE html><html><head><link rel=\"stylesheet\" href=\"https://unpkg.com/@picocss/pico@latest/css/pico.min.css\"><link rel=\"stylesheet\" href=\"../custom.css\"><title></title></head>")
   #output.write("<body><nav><ul><img src=\"../../logo-header-small.png\"><li><strong>Ratel</strong></li></ul><ul><li>Getting started</li><li>Documentation</li></ul></nav>")
-  output.write("<body><nav class=\"container-fluid\"><ul><img src=\"../../assets/logo-header-small.png\"/><li><a href=\"../../index.html\" class=\"contrast\"><strong>Ratel</strong></a></li></ul><ul><li><a href=\"#\" class=\"contrast\">Getting started</a></li><li><a href=\"board.html\" class=\"contrast\">Documentation</a></li></ul></nav>")
+  output.write("<body><nav><nav><ul><img src=\"../../assets/logo-header-small.png\"/><li><a href=\"../../index.html\" class=\"contrast\"><strong>Ratel</strong></a></li></ul><ul><li><a href=\"../../gettingstarted.html\" class=\"contrast\">Getting started</a></li><li><a href=\"board.html\" class=\"contrast\">Documentation</a></li></ul></nav></nav>")
   output.write("<aside><h3>Navigation</h3>")
   output.write("<a href=\"board.html\">BOARD</a>")
   for navModule, navContent in modules:
@@ -85,9 +85,9 @@ for module, content in modules:
     output.write("</ul></details>")
   output.write("</aside>")
   if content.path.len == 0:
-    output.write("<main class=\"container\"><h2>" & module & "</h2>")
+    output.write("<main><h2>" & module & "</h2>")
   else:
-    output.write("<main class=\"container\"><h2><span class=\"muted\"><a href=\"" & content.path & ".html\">" & content.path & "</a>/</span>" & module & "</h2>")
+    output.write("<main><h2><span class=\"muted\"><a href=\"" & content.path & ".html\">" & content.path & "</a>/</span>" & module & "</h2>")
   output.write("<p>" & content.description & "</p><dl>")
   for key, entries in content.elements:
     output.write "<div id=\"" & key & "\" class=\"group\">"
