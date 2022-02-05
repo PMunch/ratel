@@ -72,7 +72,7 @@ for module, content in modules:
   let output = open("documentation/board/" & module & ".html", fmWrite)
   output.write("<!DOCTYPE html><html><head><link rel=\"stylesheet\" href=\"https://unpkg.com/@picocss/pico@latest/css/pico.min.css\"><link rel=\"stylesheet\" href=\"../custom.css\"><title></title></head>")
   #output.write("<body><nav><ul><img src=\"../../logo-header-small.png\"><li><strong>Ratel</strong></li></ul><ul><li>Getting started</li><li>Documentation</li></ul></nav>")
-  output.write("<body><nav><nav><ul><img src=\"../../assets/logo-header-small.png\"/><li><a href=\"../../index.html\" class=\"contrast\"><strong>Ratel</strong></a></li></ul><ul><li><a href=\"../../gettingstarted.html\" class=\"contrast\">Getting started</a></li><li><a href=\"board.html\" class=\"contrast\">Documentation</a></li></ul></nav></nav>")
+  output.write("<body data-theme=\"dark\"><nav><nav><ul><img src=\"../../assets/logo-header-small.png\"/><li><a href=\"../../index.html\" class=\"contrast\"><strong>Ratel</strong></a></li></ul><ul><li><a href=\"../../gettingstarted.html\" class=\"contrast\">Getting started</a></li><li><a href=\"board.html\" class=\"contrast\">Documentation</a></li></ul></nav></nav>")
   output.write("<aside><h3>Navigation</h3>")
   output.write("<a href=\"board.html\">BOARD</a>")
   for navModule, navContent in modules:
