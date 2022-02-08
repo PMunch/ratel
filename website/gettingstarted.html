@@ -57,7 +57,6 @@ gc = "arc"
 define = "useMalloc"
 
 opt = "size"
-deadCodeElim = "on"
 exceptions = "goto"
 
 noMain
@@ -77,8 +76,8 @@ avr.any.gcc.linkerexe = "avr-gcc"
           don't use any garbage collected memory this won't generate any code, and even if you do it's nice and efficient.
           <code>define = "useMalloc"</code> configures Nim to only use the standard C <code>malloc</code> and friends memory handling calls.</p>
 
-          <p><code>opt = "size"</code>, <code>deadCodeElim = "on"</code>, and <code>exceptions = "goto"</code> are simply features of the Nim
-          compiler which creates smaller code. These are really optional.</p>
+          <p><code>opt = "size"</code>, and <code>exceptions = "goto"</code> are simply features of the Nim compiler which creates smaller code.
+          These are really optional.</p>
 
           <p>We will also define our own <code>main</code> procedure so we pass <code>noMain</code> to stop Nim from creating one. And then
           the only part of this definition which is Ratel related, namely the <code>define = "board:unor3"</code> which tells Ratel that the
