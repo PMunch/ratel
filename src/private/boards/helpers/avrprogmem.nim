@@ -61,8 +61,10 @@ import strutils
 
 template p*(x: static[string]): untyped =
   # TODO: Look at unescape, C size must match Nim size, but x is a raw string..
-  var data {.codegendecl: "", noinit.}: ProgmemString[unescape(x).len]
-  {.emit:["static const char ", data, "[] PROGMEM = (\"", x, "\");"].}
+  var data {.codegenDecl: "static const $# $# PROGMEM = (\"" & x & "\")", noinit.}: ProgmemString[unescape(x).len]
+  if false:
+    # This dummy call is here for nim to include pgmspace.h, where PROGMEM is defined
+    discard pgmReadByte(cast[ptr uint8](nil))
   data
 
 macro createFieldReaders*(obj: typed): untyped =
