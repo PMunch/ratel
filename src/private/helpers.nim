@@ -2,7 +2,7 @@ import macros, strutils
 
 const board* {.strdefine.} = ""
 
-macro generateInclude*(library: static[string] = ""): untyped =
+macro generateInclude*(library: static[string] = "", board: static[string] = board): untyped =
   let
     boardIdentifier = newIdentNode(board)
     avrImport =

@@ -1,0 +1,1 @@
+include "../helpers/avrBoardConf.nim"
