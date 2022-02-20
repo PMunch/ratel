@@ -1,4 +1,4 @@
-import macros, strutils
+import macros, strutils, hashes
 
 type
   Progmem*[T] {.byref.} = distinct T
@@ -57,13 +57,37 @@ template `[]`*[N, T](data: Progmem[array[N, T]], idx: int): untyped =
 template `[]`*(data: Progmem[cstring], idx: int): untyped =
   pgmReadByte(cast[ptr char](cast[int](data) + idx)).char
 
-import strutils
+proc toCChar*(c: char; result: var string) {.inline.} =
+  # Taken from the Nim compiler
+  case c
+  of '\0'..'\x1F', '\x7F'..'\xFF':
+    result.add '\\'
+    result.add toOctal(c)
+  of '\'', '\"', '\\', '?':
+    result.add '\\'
+    result.add c
+  else:
+    result.add c
 
-template p*(x: static[string]): untyped =
-  # TODO: Look at unescape, C size must match Nim size, but x is a raw string..
-  var data {.codegendecl: "", noinit.}: ProgmemString[unescape(x).len]
-  {.emit:["static const char ", data, "[] PROGMEM = (\"", x, "\");"].}
-  data
+proc makeCString*(s: string): string =
+  # Taken from the Nim compiler
+  result = newStringOfCap(int(s.len.toFloat * 1.1) + 1)
+  result.add("\"")
+  for i in 0..<s.len:
+    toCChar(s[i], result)
+  result.add('\"')
+
+macro p*(x: static[string]): untyped =
+  # Create an ident based on the content, this means that if the same string occurs twice it will only be allocated once.
+  var
+    dataIdent = newIdentNode("progmemData_" & $hash(x))
+    cstr = makeCString(x)
+  quote do:
+    when not declared(`dataIdent`):
+      let `dataIdent` {.codegenDecl: "static const $# $# PROGMEM = (" & `cstr` & ")", importc, global.}: ProgmemString[`x`.len]
+    if false: # This dummy call is here for nim to include pgmspace.h, where PROGMEM is defined
+      discard pgmReadByte(cast[ptr uint8](nil))
+    `dataIdent`
 
 macro createFieldReaders*(obj: typed): untyped =
   let impl = getImpl(obj)
@@ -110,8 +134,8 @@ macro progmem*(definitions: untyped): untyped =
       data = definition[1][0][1]
     else: discard
     result.add quote do:
-      # Stupid workaround for https://github.com/nim-lang/Nim/issues/17497
       # const instead of NIM_CONST because of C++
-      let `hiddenName` {.codegenDecl: "N_LIB_PRIVATE const $# PROGMEM $#".}: `dataType` = `data`
-      template `name`*(): untyped = Progmem(`hiddenName`)
+      let `name`* {.codegenDecl: "N_LIB_PRIVATE const $# PROGMEM $#", importc, global.}: Progmem[typeof(`data`)]
+      if false: # This dummy call is here for nim to include pgmspace.h, where PROGMEM is defined
+        discard pgmReadByte(cast[ptr uint8](nil))
   echo result.repr
