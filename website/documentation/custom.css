@@ -2,10 +2,11 @@
 /* Can be forced with data-theme="light" */
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --primary: #ffe953;
-  --primary-hover: #fbc02d;
-  --primary-focus: rgba(253, 216, 53, 0.125);
+  --primary: #9a8700;
+  --primary-hover: #cdb300;
+  --primary-focus: rgba(154, 137, 0, 0.125);
   --primary-inverse: rgba(0, 0, 0, 0.75);
+  --target: #133cdb26;
 }
 
 /* Yellow Dark scheme (Auto) */
@@ -18,6 +19,7 @@
     --primary-inverse: rgba(0, 0, 0, 0.75);
     --background-color: #1e202a;
     --code-background-color: #2b2e3b;
+    --target: #373526;
   }
 }
 
@@ -30,6 +32,7 @@
   --primary-inverse: rgba(0, 0, 0, 0.75);
   --background-color: #1e202a;
   --code-background-color: #2b2e3b;
+  --target: #373526;
 }
 
 /* Yellow (Common styles) */
@@ -42,27 +45,81 @@
   --font-weight: 400;
   --border-radius: 0.2rem;
 }
-span.Keyword {
-  font-weight: bold;
-  color: #ff79c6 }
-span.Punctuation {
-  font-weight: bold; }
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --keyword: #5e8f60;
+  --specialKeyword: black;
+  --identifier: #222;
+  --comment: #484a86;
+  --operator: #155da4;
+  --punctuation: black;
+  --other: black;
+  --escapeSequence: #c4891b;
+  --number: #252dbe;
+  --literal: #a4255b;
+  --program: #6060c0;
+  --option: #508000;
+  --raw-data: #a4255b;
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --number: #bd93f9;
+    --identifier: #fff;
+    --keyword: #ff79c6;
+    --literal: #f1fa8c;
+    --escapeSequence: #bd93f9;
+    --operator: #ff79c6;
+    --importPunctuation: #ff79c6;
+    --punctuation: var(--color);
+    --comment: #6272a4;
+    --procdef: #a0da2e;
+    --specialKeyword: #8be9fd;
+    --raw-data: #f1fa8c;
+  }
+}
+span.SpecialKeyword {
+  color: var(--specialKeyword); }
+span.ProcDef {
+  color: var(--procdef); }
+span.DecNumber {
+  color: var(--number); }
+span.BinNumber {
+  color: var(--number); }
+span.HexNumber {
+  color: var(--number); }
+span.OctNumber {
+  color: var(--number); }
+span.Bool {
+  color: var(--number); }
+span.FloatNumber {
+  color: var(--number); }
 span.Identifier {
-  color: #fff; }
+  color: var(--identifier); }
 span.Identifier > a, li > a {
-  color: #8be9fd; }
-span.DecNumber, span.BinNumber, span.HexNumber, span.OctNumber, span.FloatNumber {
-  color: #bd93f9; }
-span.StringLit, span.LongStringLit, span.CharLit {
-  color: #f1fa8c; }
+  color: var(--specialKeyword); }
+span.Keyword {
+  font-weight: 600;
+  color: var(--keyword); }
+span.StringLit {
+  color: var(--literal); }
+span.LongStringLit {
+  color: var(--literal); }
+span.CharLit {
+  color: var(--literal); }
 span.EscapeSequence {
-  color: #bd93f9; }
+  color: var(--escapeSequence); }
 span.Operator {
-  color: #ff79c6; }
+  color: var(--operator); }
+span.Punctuation {
+  color: var(--punctuation); }
+span.ImportPunctuation {
+  color: var(--importPunctuation); }
 span.Comment, span.LongComment {
   font-style: italic;
   font-weight: 400;
-  color: #6272a4; }
+  color: var(--comment); }
 span.RegularExpression {
   color: darkviolet; }
 span.TagStart {
@@ -74,22 +131,13 @@ span.Key {
 span.Value {
   color: #252dbe; }
 span.RawData {
-  color: #8be9fd; }
+  color: var(--raw-data); }
 span.Assembler {
   color: #252dbe; }
 span.Preprocessor {
   color: #252dbe; }
 span.Directive {
   color: #252dbe; }
-span.Prompt {
-  font-weight: bold;
-  color: red; }
-span.ProgramOutput {
-  font-weight: bold;
-  color: #808080; }
-span.Command, span.Rule, span.Hyperlink, span.Label, span.Reference,
-span.Other {
-  color: #f8f8f2; }
 dt > code {
   width: 100%;
 }
@@ -138,7 +186,7 @@ nav > nav {
   margin: 0 auto;
 }
 :target {
-  background-color: #373526;
+  background-color: var(--target);
 }
 pre.listing {
   padding: .375rem .5rem;

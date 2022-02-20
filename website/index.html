@@ -5,9 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ratel - next generation embedded programming</title>
-    <!--<meta name="description" content="A classic company or blog layout with a sidebar. Built with Pico CSS.">-->
-    <link rel="shortcut icon" href="https://picocss.com/favicon.ico">
-    <link rel="canonical" href="https://picocss.com/examples/company/">
+    <meta name="description" content="The Ratel project for programming microcontrollers in Nim.">
+    <link rel="shortcut icon" href="assets/logo-header-ico-16.png" sizes="16x16">
+    <link rel="shortcut icon" href="assets/logo-header-ico-32.png" sizes="32x32">
+    <link rel="shortcut icon" href="assets/logo-header-ico-64.png" sizes="64x64">
+    <link rel="shortcut icon" href="assets/logo-header-ico-128.png" sizes="128x128">
+    <link rel="shortcut icon" href="assets/logo-header-ico-256.png" sizes="256x256">
 
     <!-- Pico.css -->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
@@ -17,7 +20,7 @@
   </head>
 
   <body>
-    <nav class="container-fluid">
+    <nav class="container-fluid" data-theme="dark">
       <ul>
         <img src="assets/logo-header-small.png"/>
         <li><a href="./" class="contrast" onclick="event.preventDefault()"><strong>Ratel</strong></a></li>
@@ -73,7 +76,12 @@
           <p>The above code probably looks familiar if you've ever written code in Arduino. What won't be familiar is the size of the program that is uploaded to your microcontroller. A similar program implemented across many popular frameworks - all compiled to be size-efficient - shows us that while all the code looks fairly similar the frameworks have quite different costs of abstraction. The following graph shows the total program and data memory of the above program (and similar implementations in other languages) compiled for the Arduino Uno. Keep in mind that the program memory for the microcontroller on this board is 32Kb and the data memory is a mere 2Kb.</p>
 
           <figure>
-            <img src="assets/graph.svg" alt="Comparisson">
+            <picture>
+              <source
+                srcset="assets/graph.svg"
+                media="(prefers-color-scheme: dark)">
+              <img src="assets/graph-light.svg" alt="Comparisson">
+            </picture>
             <figcaption>Comparison of test program across various frameworks</figcaption>
           </figure>
           <h3>How does Ratel achieve this?</h3>

@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <nav class="container-fluid">
+    <nav class="container-fluid" data-theme="dark">
       <ul>
         <img src="assets/logo-header-small.png" alt="Ratel Logo"/>
         <li><a href="index.html" class="contrast"><strong>Ratel</strong></a></li>
@@ -119,7 +119,7 @@ avr.any.gcc.linkerexe = "avr-gcc"
           a couple handy tools, such as <code>avr-size</code> which we can run to check the size our program will take on the controller. For the Arduino Uno
           which uses the ATMega 328p controller the command for that would look like this:</p>
 
-          <pre><code>avr-size -C --mcu=atmega328p test &lt;name of your binary&gt;</code></pre>
+          <pre><code>avr-size -C --mcu=atmega328p &lt;name of your binary&gt;</code></pre>
 
           <p>The size breakdown you get from this should be familiar to you if you have done any kind of programming with Arduino, it's the same one which is
           written out in the terminal before uploading. It should look something like this:</p>

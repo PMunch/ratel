@@ -2,9 +2,9 @@
 /* Can be forced with data-theme="light" */
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --primary: #ffe953;
-  --primary-hover: #fbc02d;
-  --primary-focus: rgba(253, 216, 53, 0.125);
+  --primary: #9a8700;
+  --primary-hover: #cdb300;
+  --primary-focus: rgba(154, 137, 0, 0.125);
   --primary-inverse: rgba(0, 0, 0, 0.75);
 }
 
@@ -43,30 +43,78 @@
   --border-radius: 0.2rem;
 }
 
-span.Keyword {
-  color: #f92672 }
-span.Punctuation {
-  font-weight: bold; }
-span.ImportPunctuation {
-  color: #f92672 }
-span.Identifier {
-  color: #fff; }
-span.Identifier > a, span.SpecialKeyword {
-  color: #8be9fd; }
-span.DecNumber, span.BinNumber, span.HexNumber, span.OctNumber, span.FloatNumber, span.Bool {
-  color: #bd93f9; }
-span.StringLit, span.LongStringLit, span.CharLit, span.RawData {
-  color: #f1fa8c; }
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --keyword: #5e8f60;
+  --specialKeyword: #5e8f60;
+  --identifier: #222;
+  --comment: #484a86;
+  --operator: #155da4;
+  --punctuation: black;
+  --other: black;
+  --escapeSequence: #c4891b;
+  --number: #252dbe;
+  --literal: #a4255b;
+  --program: #6060c0;
+  --option: #508000;
+  --raw-data: #a4255b;
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --number: #bd93f9;
+    --identifier: #fff;
+    --keyword: #f92672;
+    --literal: #f1fa8c;
+    --escapeSequence: #bd93f9;
+    --operator: #f92672;
+    --importPunctuation: #f92672;
+    --punctuation: var(--color);
+    --comment: #6272a4;
+    --procdef: #a0da2e;
+    --specialKeyword: #8be9fd;
+    --raw-data: #f1fa8c;
+  }
+}
+span.SpecialKeyword {
+  color: var(--specialKeyword); }
 span.ProcDef {
-  color: #a0da2e; }
+  color: var(--procdef); }
+span.DecNumber {
+  color: var(--number); }
+span.BinNumber {
+  color: var(--number); }
+span.HexNumber {
+  color: var(--number); }
+span.OctNumber {
+  color: var(--number); }
+span.Bool {
+  color: var(--number); }
+span.FloatNumber {
+  color: var(--number); }
+span.Identifier {
+  color: var(--identifier); }
+span.Keyword {
+  font-weight: 600;
+  color: var(--keyword); }
+span.StringLit {
+  color: var(--literal); }
+span.LongStringLit {
+  color: var(--literal); }
+span.CharLit {
+  color: var(--literal); }
 span.EscapeSequence {
-  color: #bd93f9; }
+  color: var(--escapeSequence); }
 span.Operator {
-  color: #f92672 }
+  color: var(--operator); }
+span.Punctuation {
+  color: var(--punctuation); }
+span.ImportPunctuation {
+  color: var(--importPunctuation); }
 span.Comment, span.LongComment {
   font-style: italic;
   font-weight: 400;
-  color: #6272a4; }
+  color: var(--comment); }
 span.RegularExpression {
   color: darkviolet; }
 span.TagStart {
@@ -77,21 +125,14 @@ span.Key {
   color: #252dbe; }
 span.Value {
   color: #252dbe; }
+span.RawData {
+  color: var(--raw-data); }
 span.Assembler {
   color: #252dbe; }
 span.Preprocessor {
   color: #252dbe; }
 span.Directive {
   color: #252dbe; }
-span.Prompt {
-  font-weight: bold;
-  color: red; }
-span.ProgramOutput {
-  font-weight: bold;
-  color: #808080; }
-span.Command, span.Rule, span.Hyperlink, span.Label, span.Reference,
-span.Other {
-  color: #f8f8f2; }
 
 figure > code {
   width: 100%;
