@@ -10,7 +10,7 @@
 
 --noMain
 
---avr.any.gcc.path:"/usr/bin"
+--cc:gcc
 --avr.any.gcc.exe:"avr-gcc"
 --avr.any.gcc.linkerexe:"avr-gcc"
 
