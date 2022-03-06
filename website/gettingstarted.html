@@ -44,82 +44,60 @@
           will also need the toolchain to compile C code and upload that to your board as well. The details of this should be found with the board support
           library.</p>
 
-          <p>Once you have Ratel and your board support installed you need to set up your project. It's a little bit of manual work for the time being, but
-          this should improve in the future. First you need a configuration file to let <a href="https://nim-lang.org/docs/nimc.html#nim-for-embedded-systems">
-            Nim know that we're building for a microcontroller</a>. In this tutorial
-          we'll be building for an Arduino Uno, but these steps should be mostly the same no matter the board.</p>
+          <p>Once you have Ratel and your board support installed you need to set up your project. In this tutorial we'll be building for an Arduino Uno, but
+          this process is pretty much the same no matter the board. Simply create a <code>config.nims</code> file in your folder with the content:</p>
 
-            <pre><code>cpu = "avr"
-os = "any"
-define = "noSignalHandler"
-
-gc = "arc"
-define = "useMalloc"
-
-opt = "size"
-exceptions = "goto"
-
-noMain
-define = "board:unor3"
+            <pre><code>import boardConf
+board "unor3"
 
 avr.any.gcc.path = "/usr/bin"
 avr.any.gcc.exe = "avr-gcc"
 avr.any.gcc.linkerexe = "avr-gcc"
 </code></pre>
 
-          <p>This does a couple of things, <code>cpu = "avr"</code> tells the compiler about our architecture, such as the size of a pointer.
-          <code>os = "any"</code> makes sure that Nim doesn't depend on any OS specific features and only relies on the standard
-          <code>stdlib</code> and <code>stdio</code> libraries. The <code>define = "noSignalHandler"</code> switch overrides Nims default
-          behaviour of attaching signal handlers to create better stack traces in the case of segfaults and such.</p>
-
-          <p><code>gc = "arc"</code> turns on the new automatic reference counting algorithm for the garbage collector. If you
-          don't use any garbage collected memory this won't generate any code, and even if you do it's nice and efficient.
-          <code>define = "useMalloc"</code> configures Nim to only use the standard C <code>malloc</code> and friends memory handling calls.</p>
-
-          <p><code>opt = "size"</code>, and <code>exceptions = "goto"</code> are simply features of the Nim compiler which creates smaller code.
-          These are really optional.</p>
-
-          <p>We will also define our own <code>main</code> procedure so we pass <code>noMain</code> to stop Nim from creating one. And then
-          the only part of this definition which is Ratel related, namely the <code>define = "board:unor3"</code> which tells Ratel that the
-          board we want to build for is the Arduino Uno rev. 3.</p>
+          <p>This does a couple of things, starting with including the <code>boardConf</code> module from Ratel. Then it calls <code>board</code> which tells
+          Ratel that the board we want to build for is the Arduino Uno rev. 3. This will automatically include a set of sane defaults for compiling for this
+          micro-controller, along with some procedures that we'll get back to later.</p>
 
           <p>The last three lines are simply telling Nim where to find the specific compiler we need to use for the CPU/OS combination we're using.
           These could also be placed in your <a href="https://nim-lang.org/docs/nimc.html#compiler-usage-configuration-files">global configuration</a>
-          as they will only be applied when compiling for these platforms</p>
+          as they will only be applied when compiling for these platforms.</p>
 
           <h3>Writing our code</h3>
           <p>Now that our project is all set up we need to write some code, the sample from the front page is a good start. Simply save the following code in
-          a file with the <code>.nim</code> extension.</p>
+          a file with the <code>.nim</code> extension named the same as the folder it's in.</p>
           <pre><code><span class="Keyword">import</span> <span class="Identifier">board</span>
 <span class="Keyword">import</span> <span class="Identifier">board</span> <span class="Operator">/</span> <span class="ImportPunctuation">[</span><span class="Identifier">times</span><span class="Punctuation">,</span> <span class="Identifier">serial</span><span class="Punctuation">,</span> <span class="Identifier">progmem</span><span class="ImportPunctuation">]</span>
 
-<span class="SpecialKeyword">proc</span> <span class="ProcDef">main</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">cint</span> <span class="Punctuation">{</span><span class="Operator">.</span><span class="Identifier">exportc</span><span class="Operator">.</span><span class="Punctuation">}</span> <span class="Operator">=</span>
-  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">init</span><span class="Punctuation">(</span><span class="DecNumber">9600</span><span class="Operator">.</span><span class="Identifier">Hz</span><span class="Punctuation">)</span>
-  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Hello world\n&quot;</span>
-  <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">output</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+<span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">init</span><span class="Punctuation">(</span><span class="DecNumber">9600</span><span class="Operator">.</span><span class="Identifier">Hz</span><span class="Punctuation">)</span>
+<span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Hello world\n&quot;</span>
+<span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">output</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
 
-  <span class="SpecialKeyword">while</span> <span class="Bool">true</span><span class="Punctuation">:</span>
-    <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">high</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
-    <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is on\n&quot;</span>
-    <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span>
-    <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">low</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
-    <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is off\n&quot;</span>
-    <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span></code></pre>
+<span class="SpecialKeyword">while</span> <span class="Bool">true</span><span class="Punctuation">:</span>
+  <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">high</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is on\n&quot;</span>
+  <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span>
+  <span class="Identifier">Led</span><span class="Operator">.</span><span class="Identifier">low</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+  <span class="Identifier">Serial</span><span class="Operator">.</span><span class="Identifier">send</span> <span class="RawData">p&quot;Led is off\n&quot;</span>
+  <span class="Identifier">delayMs</span><span class="Punctuation">(</span><span class="DecNumber">1000</span><span class="Punctuation">)</span></code></pre>
 
           <p>To write your own code have a browse through the documentation and check out any Ratel modules in Nimble.</p>
 
           <h3>Compiling and uploading</h3>
-          <p>With the project set up and the code written it is time to compile. There is currently a bug which doesn't allow <code>os = "any"</code> to work
-          properly from within the configuration file we created earlier, and there isn't much use for building with debug symbols and runtime overflow checks
-          and such on this kind of controller. So to build our program simply run:</p>
+          <p>With the project set up and the code written it is time to compile. When we imported the board configuration earlier we got some tasks for doing
+          this loaded into our configuration. To run these we use the <code>ratel</code> binary. So to build simply run:</p>
 
-          <pre><code>nim c -d:danger --os:any &lt;name of your file&gt;</code></pre>
+          <pre><code>ratel build</code></pre>
 
-          <p>This should have created a binary file in the same folder with the same name as your file but without the extension. The AVR toolchain comes with
-          a couple handy tools, such as <code>avr-size</code> which we can run to check the size our program will take on the controller. For the Arduino Uno
-          which uses the ATMega 328p controller the command for that would look like this:</p>
+          <p>If you missed the sentence earlier about putting your file in a folder of the same name this will fail, but fret not, simply pass the file to
+          build with the <code>-f</code> flag. This command should have created a binary file in the same folder with the same name as your file but without
+          the extension. In order to check how big the resulting binary is we can simply run:</p>
 
-          <pre><code>avr-size -C --mcu=atmega328p &lt;name of your binary&gt;</code></pre>
+          <pre><code>ratel size</code></pre>
+
+          <p>Or if you're of the curious kind:</p>
+
+          <pre><code>ratel sizeDetails</code></pre>
 
           <p>The size breakdown you get from this should be familiar to you if you have done any kind of programming with Arduino, it's the same one which is
           written out in the terminal before uploading. It should look something like this:</p>
@@ -128,20 +106,18 @@ avr.any.gcc.linkerexe = "avr-gcc"
 ----------------
 Device: atmega328p
 
-Program:     304 bytes (0.9% Full)
+Program:     298 bytes (0.9% Full)
 (.text + .data + .bootloader)
 
 Data:          0 bytes (0.0% Full)
 (.data + .bss + .noinit)</code></pre>
 
-          <p>Now the final step of the process is to upload our code to the controller. This can be achieved by using another program installed by the
-          toolchain called <code>avrdude</code>. There are a lot of options that can be passed to this tool, and a lot of resources explaining what they all do,
-          so I won't go into detail about that here. Suffice to say that to upload our binary we can use a command like this one:</p>
+          <p>Now the final step of the process is to upload our code to the controller. You can of course do this manually with <code>avrdude</code> but Ratel
+          comes with a task for this as well:</p>
 
-          <pre><code>avrdude -F -V -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:&lt;name of your binary&gt;:e</code></pre>
+          <pre><code>ratel upload --device=/dev/ttyACM0</code></pre>
 
-          <p>The only parameter you really should have to change here is the port at which your board is located. For me it's <code>/dev/ttyACM0</code> but this
-          might be different for you.</p>
+          <p>For me the board is connected to the USB port at <code>/dev/ttyACM0</code> but this might be different for you.</p>
 
           <p>And that should be it! Your board should now be flashing an LED and printing to the serial terminal. To view the output you can either use the
           serial terminal that comes with Arduino if you have that installed, or you can use a number of terminal applications. The easiest might even be to run
