@@ -13,5 +13,4 @@ bin           = @["ratel"]
 
 requires "nim >= 1.6.4"
 requires "nimscripter"
-requires "compiler"
 requires "cligen"

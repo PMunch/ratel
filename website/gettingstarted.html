@@ -47,13 +47,12 @@
           <p>Once you have Ratel and your board support installed you need to set up your project. In this tutorial we'll be building for an Arduino Uno, but
           this process is pretty much the same no matter the board. Simply create a <code>config.nims</code> file in your folder with the content:</p>
 
-            <pre><code>import boardConf
-board "unor3"
+            <pre><code><span class="Keyword">import</span> <span class="Identifier">boardConf</span>
+<span class="Identifier">board</span> <span class="StringLit">&quot;unor3&quot;</span>
 
-avr.any.gcc.path = "/usr/bin"
-avr.any.gcc.exe = "avr-gcc"
-avr.any.gcc.linkerexe = "avr-gcc"
-</code></pre>
+<span class="Identifier">avr</span><span class="Operator">.</span><span class="Identifier">any</span><span class="Operator">.</span><span class="Identifier">gcc</span><span class="Operator">.</span><span class="Identifier">path</span> <span class="Operator">=</span> <span class="StringLit">&quot;/usr/bin&quot;</span>
+<span class="Identifier">avr</span><span class="Operator">.</span><span class="Identifier">any</span><span class="Operator">.</span><span class="Identifier">gcc</span><span class="Operator">.</span><span class="Identifier">exe</span> <span class="Operator">=</span> <span class="StringLit">&quot;avr-gcc&quot;</span>
+<span class="Identifier">avr</span><span class="Operator">.</span><span class="Identifier">any</span><span class="Operator">.</span><span class="Identifier">gcc</span><span class="Operator">.</span><span class="Identifier">linkerexe</span> <span class="Operator">=</span> <span class="StringLit">&quot;avr-gcc&quot;</span></code></pre>
 
           <p>This does a couple of things, starting with including the <code>boardConf</code> module from Ratel. Then it calls <code>board</code> which tells
           Ratel that the board we want to build for is the Arduino Uno rev. 3. This will automatically include a set of sane defaults for compiling for this
