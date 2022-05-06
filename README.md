@@ -23,9 +23,7 @@ this process is pretty much the same no matter the board. Simply create a `confi
 import boardConf
 board "unor3"
 
-avr.any.gcc.path = "/usr/bin"
-avr.any.gcc.exe = "avr-gcc"
-avr.any.gcc.linkerexe = "avr-gcc"
+--avr.any.gcc.path: "/usr/bin"
 ```
 
 This does a couple of things, starting with including the `boardConf` module from Ratel. Then it calls `board` which tells
@@ -38,8 +36,7 @@ as they will only be applied when compiling for these platforms.
 
 ## Writing our code
 Now that our project is all set up we need to write some code, the sample from the front page is a good start. Simply save the following code in
-a file with the `.nim` extension named the same as the folder it's in. If you're using Nim on the devel branch you can leave out the `main` proc and simply
-have everything in the global scope.
+a file with the `.nim` extension named the same as the folder it's in.
 
 ```nim
 import board

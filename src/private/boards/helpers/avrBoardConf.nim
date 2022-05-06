@@ -8,8 +8,6 @@
 --opt:size
 --exceptions:goto
 
---noMain
-
 --cc:gcc
 --avr.any.gcc.exe:"avr-gcc"
 --avr.any.gcc.linkerexe:"avr-gcc"
