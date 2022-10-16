@@ -122,13 +122,13 @@ macro configure*(pins: static[openarray[Pin]], states: varargs[untyped]): untype
   for pin in pins:
     ports.mgetOrPut(pin.port.portChar, @[]).add pin.num
   for state in states:
-    expectKind state, nnkIdent
+    #expectKind state, nnkIdent
     for portName, pins in ports.pairs:
       var valueMask = newLit(0)
       for pin in pins:
         valueMask = quote do:
           `valueMask` or (1'u8 shl `pin`)
-      case state.strVal:
+      case state.repr:
       of "input":
         let port = newIdentNode("ddr" & $portName)
         result.add quote do:
@@ -153,7 +153,7 @@ macro configure*(pins: static[openarray[Pin]], states: varargs[untyped]): untype
         let port = newIdentNode("port" & $portName)
         result.add quote do:
           `port` = `port` and not `valueMask`
-      else: doAssert state.strVal in ["input", "output", "pullup", "normal", "high", "low"]
+      else: doAssert state.repr in ["input", "output", "pullup", "normal", "high", "low"]
   #echo result.repr
 
 macro generateCaseStmt(pinsCount: static[int], pinsname: untyped, iterVar: untyped, states: varargs[untyped]): untyped =
