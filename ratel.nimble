@@ -5,7 +5,7 @@ author        = "Peter Munch-Ellingsen"
 description   = "Nim for microcontrollers"
 license       = "MIT"
 srcDir        = "src"
-installExt    = @["nim"]
+installExt    = @["nim", "ld"]
 bin           = @["ratel"]
 
 

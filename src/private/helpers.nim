@@ -20,7 +20,7 @@ macro generateInclude*(library: static[string] = "", board: static[string] = boa
     if board == "":
       quote do:
         {.error: "No board declared, you must specify the board to compile for. See the manual for instructions".}
-    elif board.nimIdentNormalize in ["teensy", "unor3", "digispark"]:
+    elif board.nimIdentNormalize in ["teensy", "unor3", "digispark", "esp32c3devkitm1"]:
       quote do:
         include `avrImport`
     else:

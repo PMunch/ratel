@@ -106,3 +106,13 @@ For me the board is connected to the USB port at `/dev/ttyACM0` but this might b
 And that should be it! Your board should now be flashing an LED and printing to the serial terminal. To view the output you can either use the
 serial terminal that comes with Arduino if you have that installed, or you can use a number of terminal applications. The easiest might even be to run
 `tail -f /dev/ttyACM0`.
+
+## ESP32-C3
+The ESP32-C3-DevKitM-1 is supported as well. It needs Espressif's `riscv32-esp-elf` toolchain and `esptool` in your path, and this in `config.nims`:
+
+```nim
+import boardConf
+board "esp32c3devkitm1"
+```
+
+Pins are named after their GPIO number, `IO0` through `IO10` and `IO18` through `IO21`. There is no `Led`, the one on this board is an addressable RGB LED which a pin can't simply switch on. Constants already live in flash, so `p` is only there to keep code portable. On top of the usual modules `board / times` has `cycles`, which counts the clock cycles of the core. Building and uploading is the same as above, the board normally shows up as `/dev/ttyUSB0`.
